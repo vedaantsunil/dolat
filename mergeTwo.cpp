@@ -5,6 +5,67 @@
 #include <iterator>
 #include <vector>
 using namespace std;
+using std::cout; using std::ofstream;
+using std::endl; using std::string;
+
+
+class Student
+{
+    int timestamp;
+    char stockname[50];
+public:
+    void setData()
+    {
+        cout << "\nEnter timestamp. ";
+        cin >> timestamp;
+        cout << "Enter name of stock ";
+        cin >> stockname;
+    }
+
+    void showData()
+    {
+        string filename("student.txt");
+        ofstream file_out;
+
+        file_out.open(filename, std::ios_base::app);
+        file_out << stockname <<" "<< timestamp << endl;
+        cout << "Done !" << endl;
+        cout << "\nAdmission no. : " << timestamp;
+        cout << "\nStudent Name : " << stockname;
+    }
+	 
+    int retAdmno()
+    {
+        return timestamp;
+    }
+};
+
+void display()
+{
+    ifstream inFile;
+    inFile.open("student.bin", ios::binary);
+    ofstream outFile;
+    outFile.open("student.txt", ios::out);
+
+    Student obj;
+
+    // string filename("student.txt");
+    // ofstream file_out;
+
+    // file_out.open(filename, std::ios_base::app);
+    // file_out << "Some random text to append." << endl;
+    // cout << "Done !" << endl;
+
+    while(inFile.read((char*)&obj, sizeof(obj)))
+    {
+        obj.showData();
+        // file_out << "Some random text to append." << endl;
+    }        
+    
+    inFile.close();
+    outFile.close();
+}
+
 
 bool sortbysec(const pair<string,int> &a,
               const pair<string,int> &b)
@@ -34,8 +95,10 @@ int main()
   fstream f1,f2,f3; 
   string str1,str2; //str1 for fetching string line from file 1 and str2 for fetching string from file2
   
+   cout << "\nList of records";
+    display();
   f1.open("file1.txt",ios::in);//opening file in reading mode
-  f2.open("file2.txt",ios::in);
+  f2.open("student.txt",ios::in);
   f3.open("file3.txt",ios::out);//opening file in writing mode
 
    while(getline(f1, str1)){ //read lines from file object and put it into string and push back to file 3.
