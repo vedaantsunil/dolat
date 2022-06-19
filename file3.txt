@@ -1,0 +1,4 @@
+facebook 9234
+microsoft 78
+tesla 5678
+tata 9090
